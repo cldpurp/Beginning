@@ -1,0 +1,123 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        char[][] field = new char[3][3];
+
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[i].length; j++) {
+                field[i][j] = '_';
+            }
+        }
+
+        int xs = 0;
+        int os = 0;
+        Boolean xxx = false;
+        Boolean ooo = false;
+
+        System.out.println("---------");
+        for (int i = 0; i < 3; i++) {
+            System.out.println(String.format("| %c %c %c |", field[i][0], field[i][1], field[i][2]));
+        }
+        System.out.println("---------");
+        int parity = 1;
+
+        while (!xxx || !ooo) {
+            if (xs + os == 9) {
+                break;
+            }
+            String coord1;
+            String coord2;
+            boolean aNumber = false;
+            boolean niceMove = false;
+            boolean inBounds = false;
+            int x = 0;
+            int y = 0;
+            char thing = 'X';
+
+            while (!aNumber && !inBounds && !niceMove) {
+                aNumber = false;
+                inBounds = false;
+                niceMove = false;
+                //coord1 = sc.next();
+                //coord2 = sc.next();
+                try {
+                    coord1 = sc.next();
+                    coord2 = sc.next();
+                    x = Integer.parseInt(coord1);
+                    y = Integer.parseInt(coord2);
+                    aNumber = true;
+
+                    try {
+                        if ((field[x - 1][y - 1] == 'X' || field[x - 1][y - 1] == 'O')) {
+                            System.out.println("This cell is occupied! Choose another one!");
+                        } else {
+                            niceMove = true;
+                            inBounds = true;
+                        }
+                    } catch (ArrayIndexOutOfBoundsException ex) {
+                       System.out.println("Coordinates should be from 1 to 3!");
+                    }
+
+                }
+                catch(NumberFormatException ex){
+                    System.out.println ("You should enter numbers!");
+                }
+
+            }
+
+            if (aNumber && inBounds && niceMove) {
+                if (parity % 2 != 0){
+                    thing = 'X';
+                    xs++;
+                } else {
+                    thing = 'O';
+                    os++;
+                }
+                parity++;
+            }
+
+            if (niceMove && inBounds) {
+                field[x - 1][y - 1] = thing;
+                System.out.println("---------");
+                for (int i = 0; i < 3; i++) {
+                    System.out.println(String.format("| %c %c %c |", field[i][0], field[i][1], field[i][2]));
+                }
+                System.out.println("---------");
+            }
+            
+            
+            for (int i = 0; i < 3; i++) {
+                int row = 0;
+                int clm = 0;
+                int mDiag = 0;
+                int aDiag = 0;
+
+                for (int j = 0; j < 3; j++) {
+                    row += field[i][j];
+                    clm += field[j][i];
+                    mDiag += field[j][j];
+                    aDiag += field[j][2-j];
+                }
+
+                // ASCII value for X is 88 (X+X+X is 264)
+                // ASCII value for O is 79 (O+O+O is 237)
+                xxx = xxx || row == 264 || clm == 264 || mDiag == 264 || aDiag == 264;
+                ooo = ooo || row == 237 || clm == 237 || mDiag == 237 || aDiag == 237;
+            }
+
+            if (xxx || ooo) {
+                break;
+            }
+        }
+
+        String result = Math.abs(xs-os) > 1 || xxx && ooo ? "Impossible"
+                : xxx ? "X wins"
+                : ooo ? "O wins"
+                : xs + os == 9 ? "Draw"
+                : "Game not finished";
+        System.out.println(result);
+
+    }
+}
