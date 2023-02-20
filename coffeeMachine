@@ -1,0 +1,171 @@
+import java.util.*;
+
+public class Main {
+
+
+    public static void buy(int[] info) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println();
+        System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu: ");
+        String typeOfCoffee = sc.next();
+        int waterNeed = 0;
+        int milkNeed = 0;
+        int coffeeBeansNeed = 0;
+        switch (typeOfCoffee) {
+            case "1":
+                waterNeed = 250;
+                milkNeed = 0;
+                coffeeBeansNeed = 16;
+                if (info[0] >= waterNeed && info[1] >= milkNeed && info[2] >= coffeeBeansNeed && info[3] >= 0) {
+                    System.out.println("I have enough resources, making you a coffee!");
+                    info[0] -= waterNeed;
+                    info[1] -= milkNeed;
+                    info[2] -= coffeeBeansNeed;
+                    info[3]--;
+                    info[4] += 4;
+                } else if (info[0] < waterNeed) {
+                    System.out.println("Sorry, not enough water!");
+                } else if (info[1] < milkNeed) {
+                    System.out.println("Sorry, not enough milk!");
+                } else if (info[2] < coffeeBeansNeed) {
+                    System.out.println("Sorry, not enough coffee beans!");
+                } else if (info[3] == 0) {
+                    System.out.println("Sorry, not enough cups!");
+                }
+                break;
+            case "2":
+                waterNeed = 350;
+                milkNeed = 75;
+                coffeeBeansNeed = 20;
+                if (info[0] >= waterNeed && info[1] >= milkNeed && info[2] >= coffeeBeansNeed && info[3] >= 0) {
+                    System.out.println("I have enough resources, making you a coffee!");
+                    info[0] -= waterNeed;
+                    info[1] -= milkNeed;
+                    info[2] -= coffeeBeansNeed;
+                    info[3]--;
+                    info[4] += 7;
+                } else if (info[0] < waterNeed) {
+                    System.out.println("Sorry, not enough water!");
+                } else if (info[1] < milkNeed) {
+                    System.out.println("Sorry, not enough milk!");
+                } else if (info[2] < coffeeBeansNeed) {
+                    System.out.println("Sorry, not enough coffee beans!");
+                } else if (info[3] == 0) {
+                    System.out.println("Sorry, not enough cups!");
+                }
+                break;
+            case "3":
+                waterNeed = 200;
+                milkNeed = 100;
+                coffeeBeansNeed = 12;
+                if (info[0] >= waterNeed && info[1] >= milkNeed && info[2] >= coffeeBeansNeed && info[3] >= 0) {
+                    System.out.println("I have enough resources, making you a coffee!");
+                    info[0] -= waterNeed;
+                    info[1] -= milkNeed;
+                    info[2] -= coffeeBeansNeed;
+                    info[3]--;
+                    info[4] += 6;
+                } else if (info[0] < waterNeed) {
+                    System.out.println("Sorry, not enough water!");
+                } else if (info[1] < milkNeed) {
+                    System.out.println("Sorry, not enough milk!");
+                } else if (info[2] < coffeeBeansNeed) {
+                    System.out.println("Sorry, not enough coffee beans!");
+                } else if (info[3] == 0) {
+                    System.out.println("Sorry, not enough cups!");
+                }
+                break;
+            case "back":
+                break;
+            default:
+                System.out.println("Wrong input!");
+        }
+        System.out.println();
+    }
+
+
+    public static void fill(int[] info) {
+        System.out.println();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Write how many ml of water you want to add: ");
+        int waterAdd = sc.nextInt();
+        System.out.println("Write how many ml of milk you want to add: ");
+        int milkAdd = sc.nextInt();
+        System.out.println("Write how many grams of coffee beans you want to add: ");
+        int coffeeBeansAdd = sc.nextInt();
+        System.out.println("Write how many disposable cups you want to add: ");
+        int cupsAdd = sc.nextInt();
+        System.out.println();
+
+        info[0] += waterAdd;
+        info[1] += milkAdd;
+        info[2] += coffeeBeansAdd;
+        info[3] += cupsAdd;
+    }
+
+    public static void take(int[] info) {
+        System.out.println("I gave you $" + info[4]);
+        info[4] = 0;
+    }
+
+    public static void remain(int[] info) {
+        System.out.println();
+        System.out.println("The coffee machine has:");
+        System.out.println(info[0] + " ml of water");
+        System.out.println(info[1] + " ml of milk");
+        System.out.println(info[2] + " g of coffee beans");
+        System.out.println(info[3] + " disposable cups");
+        System.out.println("$" + info[4] + " of money");
+        System.out.println();
+    }
+
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int water = 400;
+        int milk = 540;
+        int coffeeBeans = 120;
+        int cups = 9;
+        int money = 550;
+
+        int[] info = {water, milk, coffeeBeans, cups, money};
+
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("Write action (buy, fill, take, remaining, exit): ");
+            String action = sc.next();
+            switch (action) {
+                case "buy":
+                    buy(info);
+                    break;
+                case "fill":
+                    fill(info);
+                    break;
+                case "take":
+                    take(info);
+                    break;
+                case "exit":
+                    exit = true;
+                    break;
+                case "remaining":
+                    remain(info);
+                    break;
+                default:
+                    System.out.println("Wrong input!");
+                    break;
+            }
+
+        }
+
+        /*System.out.println("""
+                Starting to make a coffee
+                Grinding coffee beans
+                Boiling water
+                Mixing boiled water with crushed coffee beans
+                Pouring coffee into the cup
+                Pouring some milk into the cup
+                Coffee is ready!
+                """);
+         */
+    }
+}
